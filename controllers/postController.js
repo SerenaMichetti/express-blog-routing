@@ -40,15 +40,39 @@ function destroy(req, res) {
     }
     const index = posts.indexOf(result);
     posts.splice(index, 1);
-    console.log(`Post con id ${id} eliminato` );
+    console.log(`Post con id ${id} eliminato`);
     console.log(posts);
     return res.status(204).json();
 }
 
+// creo una funzione di store che crea un nuovo post, se il post viene creato con successo restituisce un messaggio di successo e il post creato e lo aggiunge all'array dei post
+function store(req, res) {
 
-const crud = {
+    const newPost = {
+        id: posts[posts.length - 1].id + 1,
+        title: req.body.title,
+        content: req.body.content,
+        image: req.body.image,
+        tags: req.body.tags
+    }
+    posts.push(newPost);
+    return res.status(201).json(newPost);
+}
+// update
+function update(req, res) {
+    res.send(`hai richiesto di modificare completamente il post con id: ${req.params.id}`);
+};
+// modify
+function modify(req, res) {
+    res.send(`Hai richiesto di modificare parzialmente il post con id: ${req.params.id}`);
+};
+
+const crudController = {
     index,
     show,
-    destroy
+    destroy,
+    store,
+    update,
+    modify
 }
-module.exports = crud
+module.exports = crudController

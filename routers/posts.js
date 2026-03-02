@@ -10,17 +10,14 @@ router.get('/', postController.index);
 router.get('/:id', postController.show);
 
 // store
-router.post('/', function (req, res) {
-    res.send('Hai creato un nuovo post');
-});
+router.post('/', postController.store);
+
 // update
-router.put('/:id', function (req, res) {
-    res.send(`hai richiesto di modificare completamente il post con id: ${req.params.id}`);
-});
+router.put('/:id', postController.update);
+
 // modify
-router.patch('/:id', function (req, res) {
-    res.send(`Hai richiesto di modificare parzialmente il post con id: ${req.params.id}`);
-});
+router.patch('/:id', postController.modify);
+
 // destroy
 router.delete('/:id', postController.destroy);
 
