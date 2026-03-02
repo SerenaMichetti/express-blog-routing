@@ -6,7 +6,7 @@ function index(req, res) {
     let results = posts;
 
     if (req.query.tags) {
-    
+
         results = posts.filter(post => post.tags.includes(req.query.tags))
     }
     res.json(results);
@@ -40,7 +40,9 @@ function destroy(req, res) {
     }
     const index = posts.indexOf(result);
     posts.splice(index, 1);
-    res.json({ message: `Post con id ${id} eliminato` });
+    console.log(`Post con id ${id} eliminato` );
+    console.log(posts);
+    return res.status(204).json();
 }
 
 
