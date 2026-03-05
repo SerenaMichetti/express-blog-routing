@@ -4,12 +4,14 @@ const express = require('express')
 
 //importo il router posts
 const postsRouter = require("./routers/posts")
+const checkTime= require("./middlewares/checkTime")
 
 const app = express()
 const port = 3000
 
 app.use(express.static('public'));
-app.use(express.json())
+app.use(express.json());
+app.use(checkTime);
 
 //rotta base con hello world
 app.get('/', (req, res) => {
