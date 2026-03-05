@@ -89,18 +89,49 @@ function update(req, res) {
         return res.status(404).json({ error: "Not Found", message: "Post non trovato" });
     }
 
-    result.title = req.body.title;
-    result.image = req.body.image;
-    result.tags = req.body.tags;
+    result.title = req.body.title ?? result.title;
+    result.content = req.body.content ?? result.content;
+    result.image = req.body.image ?? result.image;
+    result.tags = req.body.tags ?? result.tags;
 
     console.log(`Post con id ${id} modificato`);
     console.log(result);
     return res.json(result);
 };
 
-// modify
+// creo una funzione di modify che modifica parzialmente un post in base all'id, se l'id non è un numero restituisce un errore 400, se l'id non esiste restituisce un errore 404
 function modify(req, res) {
-    res.send(`Hai richiesto di modificare parzialmente il post con id: ${req.params.id}`);
+    //res.send(`Hai richiesto di modificare parzialmente il post con id: ${req.params.id}`);
+
+    const id = Number(req.params.id);
+
+    if (isNaN(id)) {
+        return res.status(400).json({ error: "User error", message: "L'id non è valido" });
+    }
+
+    const result = posts.find(post => post.id == id);
+
+    if (!result) {
+        return res.status(404).json({ error: "Not Found", message: "Post non trovato" });
+    }
+
+
+    if (req.body.title !== undefined) {
+        result.title = req.body.title;
+    }
+    if (req.body.content !== undefined) {
+        result.content = req.body.content;
+    }
+    if (req.body.image !== undefined) {
+        result.image = req.body.image;
+    }
+    if (req.body.tags !== undefined) {
+        result.tags = req.body.tags;
+    }
+
+    console.log(`Post con id ${id} modificato`);
+
+    return res.json(result);
 };
 
 const crudController = {
