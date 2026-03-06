@@ -4,7 +4,7 @@ const posts = require('../data/posts')
 function index(req, res) {
 
     let results = posts;
-
+    
     if (req.query.tags) {
 
         results = posts.filter(post => post.tags.includes(req.query.tags))
