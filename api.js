@@ -4,14 +4,16 @@ const express = require('express')
 
 //importo il router posts
 const postsRouter = require("./routers/posts")
-const checkTime= require("./middlewares/checkTime")
+
+//importo il middleware routeNotFound per verificare se una rotta è esistente
+const routeNotFound = require("./middlewares/routeNotFound")
 
 const app = express()
 const port = 3000
 
 app.use(express.static('public'));
 app.use(express.json());
-app.use(checkTime);
+
 
 //rotta base con hello world
 app.get('/', (req, res) => {
@@ -20,6 +22,9 @@ app.get('/', (req, res) => {
 
 //richiamo la variabile posts router e inserisco il prefisso /posts
 app.use("/posts", postsRouter)
+
+//se nessuna rotta è stata trovata, allora eseguo il middleware routeNotFound
+app.use(routeNotFound);
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
